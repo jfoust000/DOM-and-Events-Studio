@@ -18,11 +18,11 @@ window.addEventListener("load", function() {
 
     // The rocket
     let rocket = document.getElementById("rocket");
+    rocket.style.position = "absolute";
+    
     let rocketLeftPosition = 300;
     let rocketTopPosition = 250;
-    let bgMaxWidth = shuttleBackground.style.width;
-
-    rocket.style.position = "absolute";
+    
     rocket.style.top = `${rocketTopPosition}px`;
     rocket.style.left = `${rocketLeftPosition}px`;
 
@@ -57,42 +57,74 @@ window.addEventListener("load", function() {
     });
 
     landingButton.addEventListener("click", function() {
+       
+        if (rocketTopPosition === 250) {
+            
+            alert("Already Landed");
 
-        alert("The shuttle is landing. Landing gear engaged.");
-        flightStatus.innerHTML = "The shuttle has landed.";
-        shuttleBackground.style.backgroundColor = "green";
-        rocketTopPosition = 250;
-        rocket.style.top = `${rocketTopPosition}px`;
-        rocketLeftPosition = 300;
-        rocket.style.left = `${rocketLeftPosition}px`;
+        } else {
+
+            alert("The shuttle is landing. Landing gear engaged.");
+            flightStatus.innerHTML = "The shuttle has landed.";
+            shuttleBackground.style.backgroundColor = "green";
+            rocketTopPosition = 250;
+            rocket.style.top = `${rocketTopPosition}px`;
+            rocketLeftPosition = 300;
+            rocket.style.left = `${rocketLeftPosition}px`;
+            spaceShuttleHeight.innerHTML = 0;
+
+        }
 
      });
 
      missionAbortButton.addEventListener("click", function() {
 
-        let choice = confirm("Confirm that you want to abort the mission.");
+        if (rocketTopPosition === 250) {
+            
+            alert("Currently landed, nothing to abort.");
 
-        if (choice) {
+        } else {
+        
+            let choice = confirm("Confirm that you want to abort the mission.");
 
-            flightStatus.innerHTML = "Mission aborted.";
-            shuttleBackground.style.backgroundColor = "green";
-            spaceShuttleHeight.innerHTML = Number(0);
-            rocketTopPosition = 250;
-            rocket.style.top = `${rocketTopPosition}px`;
-            rocketLeftPosition = 300;
-            rocket.style.left = `${rocketLeftPosition}px`;
+            if (choice) {
 
-
+                flightStatus.innerHTML = "Mission aborted.";
+                shuttleBackground.style.backgroundColor = "green";
+                spaceShuttleHeight.innerHTML = Number(0);
+                rocketTopPosition = 250;
+                rocket.style.top = `${rocketTopPosition}px`;
+                rocketLeftPosition = 300;
+                rocket.style.left = `${rocketLeftPosition}px`;
+            }
+            
         }
 
      });
 
      upButton.addEventListener("click", function() {
 
-        if (rocketTopPosition > 0) {
+        if (rocketTopPosition === 250) {
+
+            let choice = confirm("Confirm that the shuttle is ready for takeoff.");
+
+            if (choice) {
+
+                flightStatus.innerHTML = "Shuttle in flight";
+                shuttleBackground.style.backgroundColor = "blue";
+                spaceShuttleHeight.innerHTML = Number(spaceShuttleHeight.innerHTML) + 10000;
+                rocketTopPosition = 240;
+                rocket.style.top = `${rocketTopPosition}px`;
+
+            }
+
+        } else if (rocketTopPosition > 0) {
+            
             rocketTopPosition -= 10;
             rocket.style.top = `${rocketTopPosition}px`;
             spaceShuttleHeight.innerHTML = Number(spaceShuttleHeight.innerHTML) + 10000;
+            flightStatus.innerHTML = "Shuttle in flight";
+            shuttleBackground.style.backgroundColor = "blue";
         
         }
 
@@ -101,11 +133,26 @@ window.addEventListener("load", function() {
      downButton.addEventListener("click", function() {
 
         if (rocketTopPosition < 250) {
+
             rocketTopPosition += 10;
             rocket.style.top = `${rocketTopPosition}px`;
             spaceShuttleHeight.innerHTML = Number(spaceShuttleHeight.innerHTML) - 10000;
+            flightStatus.innerHTML = "Shuttle is landing.";
 
          } 
+
+         if (rocketTopPosition >= 250) {
+
+            rocketTopPosition = 250;
+            rocket.style.top = `${rocketTopPosition}px`;
+            rocketLeftPosition = 300;
+            rocket.style.left = `${rocketLeftPosition}px`;
+            alert("The shuttle is landing. Landing gear engaged.");
+            flightStatus.innerHTML = "The shuttle has landed.";
+            shuttleBackground.style.backgroundColor = "green";
+            spaceShuttleHeight.innerHTML = 0;
+    
+        }
         
      });
 
@@ -114,6 +161,7 @@ window.addEventListener("load", function() {
         if (rocketLeftPosition > -15) {
             rocketLeftPosition -= 10;
             rocket.style.left = `${rocketLeftPosition}px`;
+            flightStatus.innerHTML = "Shuttle in flight";
         }
         
     });
@@ -123,6 +171,7 @@ window.addEventListener("load", function() {
         if (rocketLeftPosition < 625) {
             rocketLeftPosition += 10;
             rocket.style.left = `${rocketLeftPosition}px`;
+            flightStatus.innerHTML = "Shuttle in flight";
         }
 
      });
