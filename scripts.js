@@ -42,16 +42,23 @@ window.addEventListener("load", function() {
 
     takeOffButton.addEventListener("click", function() {
 
-        let choice = confirm("Confirm that the shuttle is ready for takeoff.");
+        if (rocketTopPosition < 250) {
 
-        if (choice) {
+            alert("Already Took Off");
 
-            flightStatus.innerHTML = "Shuttle in flight";
-            shuttleBackground.style.backgroundColor = "blue";
-            spaceShuttleHeight.innerHTML = Number(spaceShuttleHeight.innerHTML) + 10000;
-            rocketTopPosition = 240;
-            rocket.style.top = `${rocketTopPosition}px`;
+        } else {
 
+            let choice = confirm("Confirm that the shuttle is ready for takeoff.");
+
+            if (choice) {
+
+                flightStatus.innerHTML = "Shuttle in flight";
+                shuttleBackground.style.backgroundColor = "blue";
+                spaceShuttleHeight.innerHTML = Number(spaceShuttleHeight.innerHTML) + 10000;
+                rocketTopPosition = 240;
+                rocket.style.top = `${rocketTopPosition}px`;
+
+            }
         }
 
     });
@@ -126,7 +133,7 @@ window.addEventListener("load", function() {
             flightStatus.innerHTML = "Shuttle in flight";
             shuttleBackground.style.backgroundColor = "blue";
         
-        }
+        } 
 
      });
 
@@ -147,7 +154,7 @@ window.addEventListener("load", function() {
             rocket.style.top = `${rocketTopPosition}px`;
             rocketLeftPosition = 300;
             rocket.style.left = `${rocketLeftPosition}px`;
-            alert("The shuttle is landing. Landing gear engaged.");
+            alert("The shuttle has landed.");
             flightStatus.innerHTML = "The shuttle has landed.";
             shuttleBackground.style.backgroundColor = "green";
             spaceShuttleHeight.innerHTML = 0;
